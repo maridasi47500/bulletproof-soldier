@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig: {
+  firebase: {
 	    apiKey: "AIzaSyAvjoMKG3heEiRP14uIFs4OlIn7vEvNX3E",
 	      authDomain: "bulletproof-soldier.firebaseapp.com",
 	        projectId: "bulletproof-soldier",

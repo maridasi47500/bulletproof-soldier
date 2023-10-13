@@ -12,18 +12,18 @@ import {
 export class AuthService {
   constructor(private auth: Auth) { }
 
-  async register({ email, password }) {
+  async register( pass:any) {
     try {
-      const user = await createUserWithEmailAndPassword(this.auth, email, password);
+      const user = await createUserWithEmailAndPassword(this.auth, pass.email, pass.password);
       return user;
     } catch (e) {
       return null;
     }
   }
 
-  async login({ email, password }) {
+  async login( pass:any ) {
     try {
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = await signInWithEmailAndPassword(this.auth, pass.email, pass.password);
       return user;
     } catch (e) {
       return null;
