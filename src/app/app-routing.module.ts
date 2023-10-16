@@ -23,9 +23,34 @@ const routes: Routes = [
     path: 'tabs/tab3',
     loadChildren: () => import('./tab3/tab3.module').then(m => m.Tab3PageModule)
   },
+
+  {
+    path: 'make-appointment',
+    loadChildren: () => import('./make-appointment/make-appointment.module').then( m => m.MakeAppointmentPageModule)
+  },
+  {
+    path: 'edit-appointment/:id',
+    loadChildren: () => import('./edit-appointment/edit-appointment.module').then( m => m.EditAppointmentPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
   {
     path: '',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'make-sms/:user_id',
+    loadChildren: () => import('./make-sms/make-sms.module').then( m => m.MakeSmsPageModule)
+  },
+  {
+    path: 'edit-sms/:id',
+    loadChildren: () => import('./edit-sms/edit-sms.module').then( m => m.EditSmsPageModule)
+  },
+  {
+    path: 'mysms',
+    loadChildren: () => import('./mysms/mysms.module').then( m => m.MysmsPageModule)
   }
 ];
 @NgModule({

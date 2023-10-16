@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { AvatarService } from '../services/avatar.service';
 import { Auth } from '@angular/fire/auth';
+import { Appointment } from '../shared/Appointment';
+import { AppointmentService } from './../shared/appointment.service';
+
 
 @Component({
   selector: 'app-tab1',
@@ -12,10 +15,12 @@ import { Auth } from '@angular/fire/auth';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  profile:any = null;
-  user:any = null;
+  Bookings: any = [];
+  profile: any = null;
+  user: any = null;
 
   constructor(
+    private aptService: AppointmentService,
     private avatarService: AvatarService,
     private authService: AuthService,
     private auth: Auth,
@@ -23,10 +28,39 @@ export class Tab1Page {
     private loadingController: LoadingController,
     private alertController: AlertController
   ) {
-    this.avatarService.getUserProfile().subscribe((data:any) => {
+    this.avatarService.getUserProfile().subscribe((data: any) => {
       this.profile = data;
     });
-    this.user=this.auth.currentUser;
+    this.user = this.auth.currentUser;
+
+  }
+  ngOnInit() {
+    this.fetchBookings();
+    let bookingRes = this.aptService.getBookingList();
+    bookingRes.snapshotChanges().subscribe((res) => {
+      this.Bookings = [];
+      res.forEach((item) => {
+        let a: any = item.payload.toJSON();
+        a['$key'] = item.key;
+	if (a.user_id === this.user.uid){
+        this.Bookings.push(a as Appointment);
+	}
+      });
+    });
+  }
+  fetchBookings() {
+    this.aptService
+      .getBookingList()
+      .valueChanges()
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+  deleteBooking(id: any) {
+    console.log(id);
+    if (window.confirm('Do you really want to delete?')) {
+      this.aptService.deleteBooking(id);
+    }
   }
 
   async logout() {
@@ -58,5 +92,6 @@ export class Tab1Page {
         await alert.present();
       }
     }
+    this.user = this.auth.currentUser;
   }
 }

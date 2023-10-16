@@ -1,0 +1,38 @@
+<ion-header>
+	  <ion-toolbar>
+		      <ion-title>
+			            Soldier App
+				        </ion-title>
+					  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	  <ion-list class="ios list-ios hydrated">
+		      <ion-list-header class="ios hydrated">
+			      Mes sms
+			            
+				        </ion-list-header>
+
+					    <ion-item *ngFor="let sms of Sms" class="user-list">
+						          <ion-label>
+								          <h5>
+										  <ion-icon name="phone-portrait-outline"></ion-icon> {{sms.content}}
+											            </h5>
+												            <p>
+													    <ion-icon name="call"></ion-icon> <!-- sms mobile user--> 
+														              </p>
+															            </ion-label>
+
+																          <div  class="item-note" item-end>
+																		          <button *ngIf="sms.draft === 1" ion-button clear >
+																				  <ion-icon name="send-outline" style="zoom:2.0"></ion-icon> <!-- envoyer le sms-->
+																					            </button>
+																		          <button *ngIf="sms.draft === 1" ion-button clear [routerLink]="['/edit-sms/', sms.$key]">
+																				            <ion-icon name="create" style="zoom:2.0"></ion-icon>
+																					            </button>
+																						            <button ion-button clear (click)="deleteSms(sms.$key)">
+																								              <ion-icon name="trash" style="zoom:2.0"></ion-icon>
+																									              </button>
+																										            </div>
+																											        </ion-item>
+																												  </ion-list>

@@ -10,6 +10,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+																											<p *ngIf="user">Email : {{user.email}}</p>
 		<div class="preview">
 					<ion-avatar (click)="changeImage()">
 									<img *ngIf="profile && profile.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
@@ -17,8 +18,45 @@
 																	<div class="fallback">
 																							<p>Select avatar</p>
 																											</div>
-																											<p *ngIf="user">Email : {{user.email}}</p>
+
 																														</ng-template>
 																																</ion-avatar>
 																																	</div>
+																																	<ion-header>
+																																		  <ion-toolbar>
+																																			      <ion-title>
+																																				            Doctors App
+																																					        </ion-title>
+																																						  </ion-toolbar>
+																																	</ion-header>
+																																	<ion-content>
+																																		  <ion-list class="ios list-ios hydrated">
+																																			      <ion-list-header class="ios hydrated">
+																																				            Appointments
+																																					        </ion-list-header>
+																																						    <ion-item *ngFor="let booking of Bookings" class="user-list">
+																																							          <ion-label>
+																																									          <h5>
+																																											            <ion-icon name="person"></ion-icon> {{booking.name}}
+																																												            </h5>
+																																													            <p>
+																																														              <ion-icon name="call"></ion-icon> {{booking.mobile}}
+																																															              </p>
+																																																            </ion-label>
+																																																	          <div class="item-note" item-end>
+																																																			          <button ion-button clear [routerLink]="['/make-email/', booking.user_id]">
+																																																					            <ion-icon name="mail-outline" style="zoom:2.0"></ion-icon>
+																																																						            </button>
+																																																			          <button ion-button clear [routerLink]="['/make-sms/', booking.user_id]">
+																																																					            <ion-icon name="phone-portrait-outline" style="zoom:2.0"></ion-icon>
+																																																						            </button>
+																																																			          <button ion-button clear [routerLink]="['/edit-appointment/', booking.$key]">
+																																																					            <ion-icon name="create" style="zoom:2.0"></ion-icon>
+																																																						            </button>
+																																																							            <button ion-button clear (click)="deleteBooking(booking.$key)">
+																																																									              <ion-icon name="trash" style="zoom:2.0"></ion-icon>
+																																																										              </button>
+																																																											            </div>
+																																																												        </ion-item>
+																																																													  </ion-list>
 </ion-content>

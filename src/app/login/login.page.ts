@@ -43,10 +43,12 @@ export class LoginPage implements OnInit {
     const user = await this.authService.register(this.credentials.value);
     await loading.dismiss();
 
-    if (user) {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
+    if (typeof user === "string") {
+      this.showAlert('Registration failed', 'Please try again!'+user);
+
     } else {
-      this.showAlert('Registration failed', 'Please try again!');
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+
     }
   }
 
@@ -57,10 +59,13 @@ export class LoginPage implements OnInit {
     const user = await this.authService.login(this.credentials.value);
     await loading.dismiss();
 
-    if (user) {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
+    if (typeof user === "string") {
+      console.log(loading);
+      this.showAlert('Login failed', 'Please try again!' + user);
+
     } else {
-      this.showAlert('Login failed', 'Please try again!');
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+
     }
   }
 
