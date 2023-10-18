@@ -24,8 +24,21 @@
 																							        <ion-col>
 																									          <ion-button type="submit" color="primary" shape="full" expand="block">Save Sms</ion-button>
 																										          </ion-col>
-																											        </ion-row>
 																												    </form>
 																									          <ion-button type="button" (click)="sendSms()" color="primary" shape="full" expand="block">Send Sms</ion-button>
 																												      </ion-list>
+																												        <ion-list class="ios list-ios hydrated">
+																														    <ion-list-header class="ios hydrated">
+																															    tous les Sms envoyés à {{username}}
+																																      </ion-list-header>
+
+																																          <ion-item *ngFor="let sms of Sms" class="user-list">
+																																		        <ion-label>
+																																				        <h5>
+																																						           {{sms.content}}
+																																							          </h5>
+																																											          </ion-label>
+
+																																																							      </ion-item>
+																																																							        </ion-list>
 </ion-content>

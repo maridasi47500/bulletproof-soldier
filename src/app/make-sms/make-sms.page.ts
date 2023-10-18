@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SmsService } from './../shared/sms.service';
+import { Sms } from './../shared/Sms';
 import { AppointmentService } from './../shared/appointment.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Auth } from '@angular/fire/auth';
@@ -13,9 +13,11 @@ import { Auth } from '@angular/fire/auth';
 })
 export class MakeSmsPage implements OnInit {
   smsForm: FormGroup;
+  user:any;
   user_id:any;
   myid:any;
   username:any;
+  Sms: any =[];
 
   constructor(
     private smsService: SmsService,
@@ -25,16 +27,22 @@ export class MakeSmsPage implements OnInit {
     private auth: Auth,
     public fb: FormBuilder
   ) {
-	  this.myid=this.auth.currentUser.uid;
+
+	  this.user=this.auth.currentUser;
+	  if (this.user){
+	  this.myid=this.user.uid;
+	  }
 	  this.user_id = this.actRoute.snapshot.paramMap.get('user_id');
+	  console.log(this.user_id);
 	                                                          this.aptService.getBooking(this.user_id).valueChanges().subscribe(res => {
+									  console.log(res,"hello !!!");
 									                                                                        this.username=res.name;
 																		                                                                          });
  
   }
 
   ngOnInit() {
-	  var mydate=new Date();
+    var mydate=new Date();
     this.smsForm = this.fb.group({
       user_id: [this.myid],
       appointment_id: [this.user_id],
@@ -42,8 +50,19 @@ export class MakeSmsPage implements OnInit {
       content: [''],
       date: [mydate],
     });
+        this.fetchSms();
+	    let smsRes = this.smsService.getSmsList();
+	        smsRes.snapshotChanges().subscribe((res) => {
+			      this.Sms = [];
+			            res.forEach((item) => {
+					            let a: any = item.payload.toJSON();
+						            a['$key'] = item.key;
+							    if (a.user_id===this.myid && a.appointment_id === this.user_id){
+							            this.Sms.push(a as Sms);
+							    }
+								          });
+									      });
   }
-
   formSubmit() {
     if (!this.smsForm.valid) {
       return false;
@@ -53,12 +72,12 @@ export class MakeSmsPage implements OnInit {
         .then((res) => {
           console.log(res);
           this.smsForm.reset();
-          this.router.navigate(['/home']);
+          this.router.navigate(['/mysms']);
         })
         .catch((error) => console.log(error));
     }
   }
-  smsSend() {
+  sendSms() {
     if (!this.smsForm.valid) {
       return false;
     } else {
@@ -73,4 +92,15 @@ export class MakeSmsPage implements OnInit {
         })
         .catch((error) => console.log(error));
     }
+  }
+
+    fetchSms() {
+	        this.smsService
+		      .getSmsList()
+		            .valueChanges()
+			          .subscribe((res: any) => {
+					          console.log(res);
+						        });
+							  }
+
 }
