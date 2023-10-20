@@ -51,6 +51,18 @@ const routes: Routes = [
   {
     path: 'mysms',
     loadChildren: () => import('./mysms/mysms.module').then( m => m.MysmsPageModule)
+  },
+  {
+    path: 'make-email/:user_id',
+    loadChildren: () => import('./make-email/make-email.module').then( m => m.MakeEmailPageModule)
+  },
+  {
+    path: 'edit-email/:id',
+    loadChildren: () => import('./edit-email/edit-email.module').then( m => m.EditEmailPageModule)
+  },
+  {
+    path: 'myemail',
+    loadChildren: () => import('./myemail/myemail.module').then( m => m.MyemailPageModule)
   }
 ];
 @NgModule({

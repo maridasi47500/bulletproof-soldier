@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SmsService } from './../shared/sms.service';
-import { Sms } from './../shared/Sms';
-import { AppointmentService } from './../shared/appointment.service';
+import { EmailService } from './../shared/email.service';
+import { Email } from './../shared/Email';
+import { AppointmentService } from './../shared/email.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Auth } from '@angular/fire/auth';
-import { SMS } from '@awesome-cordova-plugins/sms/ngx';
+import { SMS } from '@awesome-cordova-plugins/email/ngx';
 
 
 @Component({
-  selector: 'app-make-sms',
-  templateUrl: './make-sms.page.html',
-  styleUrls: ['./make-sms.page.scss'],
+  selector: 'app-make-email',
+  templateUrl: './make-email.page.html',
+  styleUrls: ['./make-email.page.scss'],
 })
-export class MakeSmsPage implements OnInit {
- user smsForm: FormGroup;
+export class MakeEmailPage implements OnInit {
+ user emailForm: FormGroup;
  myvalue:any;
   user:any;
-  appointment:any;
+  email:any;
   user_id:any;
   myid:any;
   username:any;
-  Sms: any =[];
+  Email: any =[];
 
   constructor(
-	  private sms: SMS,
-    private smsService: SmsService,
+	  private email: SMS,
+    private emailService: EmailService,
     private aptService: AppointmentService,
     private router: Router,
     private actRoute: ActivatedRoute,
@@ -42,70 +42,73 @@ export class MakeSmsPage implements OnInit {
 	                                                          this.aptService.getBooking(this.user_id).valueChanges().subscribe(res => {
 									  console.log(res,"hello !!!");
 									                                                                        this.username=res.name;
-									                                                                        this.appointment=res;
+									                                                                        this.email=res;
 																		                                                                          });
  
   }
 
   ngOnInit() {
     var mydate=new Date();
-    this.smsForm = this.fb.group({
+    this.emailForm = this.fb.group({
       user_id: [this.myid],
-      appointment_id: [this.user_id],
+      email_id: [this.user_id],
       draft: [1],
       sent: [0],
+      subject: [''],
       content: [''],
       date: [mydate],
     });
-        this.fetchSms();
-	    let smsRes = this.smsService.getSmsList();
-	        smsRes.snapshotChanges().subscribe((res) => {
-			      this.Sms = [];
+        this.fetchEmail();
+	    let emailRes = this.emailService.getEmailList();
+	        emailRes.snapshotChanges().subscribe((res) => {
+			      this.Email = [];
 			            res.forEach((item) => {
 					            let a: any = item.payload.toJSON();
 						            a['$key'] = item.key;
-							    if (a.user_id===this.myid && a.appointment_id === this.user_id){
-							            this.Sms.push(a as Sms);
+							    if (a.user_id===this.myid && a.email_id === this.user_id){
+							            this.Email.push(a as Email);
 							    }
 								          });
 									      });
   }
   formSubmit() {
-    if (!this.smsForm.valid) {
+    if (!this.emailForm.valid) {
       return false;
     } else {
-      return this.smsService
-        .createSms(this.smsForm.value)
+      return this.emailService
+        .createEmail(this.emailForm.value)
         .then((res) => {
           console.log(res);
-          this.smsForm.reset();
-          this.router.navigate(['/mysms']);
+          this.emailForm.reset();
+          this.router.navigate(['/myemail']);
         })
         .catch((error) => console.log(error));
     }
   }
-  sendSms() {
-    if (!this.smsForm.valid) {
+  sendEmail() {
+    if (!this.emailForm.valid) {
       return false;
     } else {
-	    this.myvalue=this.smsForm.value;
+	    this.myvalue=this.emailForm.value;
 	    this.myvalue.draft=0;
-	    this.myvalue.sent=this.smsService.sendSms(this.myvalue.mobile, this.myvalue.content);
 
-      return this.smsService
-        .createSms(this.myvalue)
+
+	    this.myvalue.sent=this.emailService.sendEmail(this.myvalue.appointment_id, this.myid, this.myvalue.subject, this.myvalue.content);
+
+      return this.emailService
+        .createEmail(this.myvalue)
         .then((res) => {
           console.log(res);
-          this.smsForm.reset();
+          this.emailForm.reset();
           this.router.navigate(['/home']);
         })
         .catch((error) => console.log(error));
     }
   }
 
-    fetchSms() {
-	        this.smsService
-		      .getSmsList()
+    fetchEmail() {
+	        this.emailService
+		      .getEmailList()
 		            .valueChanges()
 			          .subscribe((res: any) => {
 					          console.log(res);

@@ -1,4 +1,4 @@
-export class Sms {
+export class Email {
 	    $key: string;
 	        user_id: string;
 	        appointment_id: string;
@@ -6,5 +6,10 @@ export class Sms {
 		    sent: number;
 		        content:string;
 		        date:any;
-			mobile?: string;
+			email?: string;
+			to?: string;
+			cc?: string;
+			bcc?: string;
+			subject?: string;
+			message?: string;
 }
