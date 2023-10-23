@@ -54,7 +54,6 @@ export class MysmsPage implements OnInit {
 																			            .createSms(this.myvalue)
 																				            .then((res) => {
 																						              console.log(res);
-																							                this.smsForm.reset();
 																									          this.router.navigate(['/home']);
 																										          })
 																											          .catch((error) => console.log(error));

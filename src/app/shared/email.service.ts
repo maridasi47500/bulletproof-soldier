@@ -52,7 +52,6 @@ export class EmailService {
 	  this.subject=subject;
 	  this.mybody=subject;
 	  this.attachment="";
-    var to="",cc="",bcc="",attachment="",subject="",body="";
     // the user has configured an email account
     this.emailComposer.isAvailable()
       .then((available: boolean) => {
