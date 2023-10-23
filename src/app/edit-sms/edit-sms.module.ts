@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { EditSmsPageRoutingModule } from './edit-sms-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EditSmsPage } from './edit-sms.page';
 
@@ -12,7 +12,7 @@ import { EditSmsPage } from './edit-sms.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule,ReactiveFormsModule, 
     EditSmsPageRoutingModule
   ],
   declarations: [EditSmsPage]

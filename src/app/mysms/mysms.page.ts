@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sms } from '../shared/Sms';
 import { SmsService } from './../shared/sms.service';
 import { AppointmentService } from './../shared/appointment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mysms',
@@ -12,7 +13,7 @@ export class MysmsPage implements OnInit {
   Sms: any = [];
   myvalue:any;
 
-  constructor(private smsService: SmsService,private aptService: AppointmentService) { }
+  constructor(private router:Router, private smsService: SmsService,private aptService: AppointmentService) { }
 
   ngOnInit() {
     this.fetchSms();
@@ -22,7 +23,7 @@ export class MysmsPage implements OnInit {
       res.forEach((item) => {
         let a: any = item.payload.toJSON();
         a['$key'] = item.key;
-	   this.smsService.getSms(item.key).valueChanges().subscribe(urres => {
+	   this.smsService.getSms(a['$key']).valueChanges().subscribe(urres => {
 	   this.aptService.getBooking(urres.appointment_id).valueChanges().subscribe(myres => {
 		   a["mobile"]=myres.mobile;
 																																															                                                                });
@@ -43,14 +44,11 @@ export class MysmsPage implements OnInit {
         console.log(res);
       });
   }
-    sendSms($ev) {
+    sendSms($ev:any) {
 					              this.myvalue={mobile: $ev.target.dataset.mobile, content:$ev.target.dataset.content};
+						      console.log(this.myvalue);
 						                  this.myvalue.draft=0;
-								              this.sms.send(this.appointment.mobile, myvalue.content).then((x)=>{
-										                          console.log(x);
-													                      this.myvalue.sent=1;
-															                  })
-																	              .catch(error => window.alert("oops! le sms n'a pas été envoyé!"));
+								              this.myvalue.sent=this.smsService.sendSms(this.myvalue.mobile, this.myvalue.content);
 
 																		            return this.smsService
 																			            .createSms(this.myvalue)

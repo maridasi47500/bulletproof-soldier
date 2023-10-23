@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormGroup, FormBuilder } from "@angular/forms";
-import { AppointmentService } from './../shared/sms.service';
+import { AppointmentService } from './../shared/appointment.service';
 import { Auth } from '@angular/fire/auth';
 @Component({
-  selector: 'app-edit-sms',
-  templateUrl: './edit-sms.page.html',
-  styleUrls: ['./edit-sms.page.scss'],
+  selector: 'app-edit-appointment',
+  templateUrl: './edit-appointment.page.html',
+  styleUrls: ['./edit-appointment.page.scss'],
 })
 export class EditAppointmentPage implements OnInit {
-  updateAppointmentForm: FormGroup;
+  updateBookingForm: FormGroup;
   id: any;
   constructor(
     private aptService: AppointmentService,
@@ -18,12 +18,12 @@ export class EditAppointmentPage implements OnInit {
     public fb: FormBuilder
   ) {
     this.id = this.actRoute.snapshot.paramMap.get('id');
-    this.aptService.getAppointment(this.id).valueChanges().subscribe(res => {
-      this.updateAppointmentForm.setValue(res);
+    this.aptService.getBooking(this.id).valueChanges().subscribe((res:any) => {
+      this.updateBookingForm.setValue(res);
     });
   }
   ngOnInit() {
-    this.updateAppointmentForm = this.fb.group({
+    this.updateBookingForm = this.fb.group({
       date: [''],
       content: [''],
       user_id: [''],
@@ -31,13 +31,13 @@ export class EditAppointmentPage implements OnInit {
       draft: [''],
       sent: ['']
     })
-    console.log(this.updateAppointmentForm.value)
+    console.log(this.updateBookingForm.value)
   }
   updateForm() {
-    this.aptService.updateAppointment(this.id, this.updateSmsForm.value)
+    this.aptService.updateBooking(this.id, this.updateBookingForm.value)
       .then(() => {
         this.router.navigate(['/home']);
       })
-      .catch(error => console.log(error));
+      .catch((error:any) => console.log(error));
   }
 }

@@ -1,12 +1,12 @@
 <ion-header>
 	  <ion-toolbar class="ios hydrated">
-		  <ion-title class="ios title-ios hydrated">Envoyer un Sms à {{username}}</ion-title>
+		  <ion-title class="ios title-ios hydrated">Envoyer un Email à {{username}}</ion-title>
 		        </ion-toolbar>
 </ion-header>
 
 <ion-content>
 	  <ion-list lines="full">
-		      <form [formGroup]="smsForm" (ngSubmit)="formSubmit()">
+		      <form [formGroup]="emailForm" (ngSubmit)="formSubmit()">
 			            <ion-item>
 						            <ion-input formControlName="user_id" type="hidden" required></ion-input>
 						            <ion-input formControlName="appointment_id" type="hidden" required></ion-input>
@@ -28,20 +28,20 @@
 														      </ion-item>
 
 																							        <ion-col>
-																									          <ion-button type="submit" color="primary" shape="full" expand="block">Save Sms</ion-button>
+																									          <ion-button type="submit" color="primary" shape="full" expand="block">Save Email</ion-button>
 																										          </ion-col>
 																												    </form>
-																									          <ion-button type="button" (click)="sendSms()" color="primary" shape="full" expand="block">Send Sms</ion-button>
+																									          <ion-button type="button" (click)="sendEmail()" color="primary" shape="full" expand="block">Send Email</ion-button>
 																												      </ion-list>
 																												        <ion-list class="ios list-ios hydrated">
 																														    <ion-list-header class="ios hydrated">
-																															    tous les Sms envoyés à {{username}}
+																															    tous les Email envoyés à {{username}}
 																																      </ion-list-header>
 
-																																          <ion-item *ngFor="let sms of Sms" class="user-list">
+																																          <ion-item *ngFor="let email of Email" class="user-list">
 																																		        <ion-label>
 																																				        <h5>
-																																						           {{sms.content}}
+																																						           {{email.content}}
 																																							          </h5>
 																																											          </ion-label>
 

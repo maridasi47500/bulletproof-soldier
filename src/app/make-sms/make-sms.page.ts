@@ -14,7 +14,7 @@ import { SMS } from '@awesome-cordova-plugins/sms/ngx';
   styleUrls: ['./make-sms.page.scss'],
 })
 export class MakeSmsPage implements OnInit {
- user smsForm: FormGroup;
+ smsForm: FormGroup;
  myvalue:any;
   user:any;
   appointment:any;

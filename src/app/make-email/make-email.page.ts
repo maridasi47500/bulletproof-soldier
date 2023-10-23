@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EmailService } from './../shared/email.service';
 import { Email } from './../shared/Email';
-import { AppointmentService } from './../shared/email.service';
+import { AppointmentService } from './../shared/appointment.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Auth } from '@angular/fire/auth';
-import { SMS } from '@awesome-cordova-plugins/email/ngx';
 
 
 @Component({
@@ -14,7 +13,7 @@ import { SMS } from '@awesome-cordova-plugins/email/ngx';
   styleUrls: ['./make-email.page.scss'],
 })
 export class MakeEmailPage implements OnInit {
- user emailForm: FormGroup;
+ emailForm: FormGroup;
  myvalue:any;
   user:any;
   email:any;
@@ -24,7 +23,6 @@ export class MakeEmailPage implements OnInit {
   Email: any =[];
 
   constructor(
-	  private email: SMS,
     private emailService: EmailService,
     private aptService: AppointmentService,
     private router: Router,

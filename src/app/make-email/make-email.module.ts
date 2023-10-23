@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MakeSmsPageRoutingModule } from './make-sms-routing.module';
+import { MakeEmailPageRoutingModule } from './make-email-routing.module';
 
-import { MakeSmsPage } from './make-sms.page';
+import { MakeEmailPage } from './make-email.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -14,8 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     IonicModule,
-    MakeSmsPageRoutingModule, ReactiveFormsModule
+    MakeEmailPageRoutingModule, ReactiveFormsModule
   ],
-  declarations: [MakeSmsPage]
+  declarations: [MakeEmailPage]
 })
-export class MakeSmsPageModule {}
+export class MakeEmailPageModule {}
